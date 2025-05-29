@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitratech - Slack Value Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 900px; /* Added max-width for better readability on wider screens */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        h1 {
+            color: #001949; /* Mitratech Primary Blue */
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        h2 {
+            color: #404040; /* Dark Gray for section headers */
+            border-bottom: 2px solid #001949; /* Mitratech Blue accent line */
+            padding-bottom: 8px; /* Increased padding */
+            margin-top: 35px; /* Increased margin */
+            margin-bottom: 20px; /* Added margin-bottom */
+        }
+        .section, .executive-summary, .final-notes {
+            margin-bottom: 35px; /* Increased margin */
+            padding-bottom: 25px; /* Increased padding */
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child, .final-notes:last-child {
+            border-bottom: none;
+        }
+        .input-block { /* Wrapper for label, input, output, detail */
+            margin-bottom: 20px; /* Increased spacing between input blocks */
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #404040;
+            margin-bottom: 3px; /* Reduced margin for tighter label-input */
+        }
+        input[type="number"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 2px; /* Reduced margin */
+            margin-bottom: 8px; /* Adjusted margin */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+        .section-total-value { 
+            font-weight: bold;
+            color: #001949; 
+            font-size: 1.2em; /* Slightly increased */
+            margin-top: 20px; /* Increased spacing above section total */
+            margin-bottom: 10px;
+            padding-top: 10px; /* Added padding for visual separation */
+            border-top: 1px dashed #eee; /* Subtle separator */
+        }
+        .grand-total-value { 
+            font-weight: bold;
+            color: #001949; 
+            font-size: 1.5em; /* Slightly increased */
+            margin-top: 15px;
+        }
+        .note, .executive-summary p, .final-notes p, .final-notes ul li {
+            font-size: 0.95em;
+            color: #404040;
+            margin-top: 5px;
+            line-height: 1.5;
+        }
+        .executive-summary strong, .final-notes strong, .note strong {
+            color: #333;
+        }
+        button {
+            background-color: #001949; 
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 25px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #000b2e; 
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+            padding-left: 0;
+        }
+        ul li {
+            font-size:0.95em;
+            margin-bottom: 5px;
+        }
+        .calculation-detail { 
+            font-size: 0.85em; /* Slightly increased for readability but still small */
+            color: #666; /* Lighter gray for less prominence */
+            margin-left: 0px; /* Align with input field */
+            display: block; 
+            margin-top: -2px; 
+            margin-bottom: 15px; /* More space after detail */
+            font-style: italic; /* Differentiate it */
+        }
+        .sub-section-output { 
+            font-weight: bold;
+            color: #333; 
+            font-size: 1.05em; /* Slightly increased */
+            margin-top: 8px; /* Spacing above sub-output */
+            margin-bottom: 2px; /* Spacing below sub-output */
+            display: block;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mitratech :: Slack Value Realization</h1>
+        
+        <div class="executive-summary">
+            <h2>Executive Summary: Why Slack & Why Now for Mitratech</h2>
+            <p>Slack is the <strong>connective tissue</strong> Mitratech needs to unify its GTM strategy and streamline operations. Even with the challenges surrounding your <strong>RCA/RCB (CPQ/Billing)</strong> implementation, getting Slack up and running now can fundamentally <strong>transform your team’s ability to uncover opportunities, accelerate deal cycles, and provide superior service</strong> across your entire portfolio of acquisitions.</p>
+            <p>This calculator helps quantify the potential business value you can begin seeing in just <strong>3-4 months</strong>. By enabling <strong>faster decision-making, improving collaboration, and consolidating your tools</strong> into a seamless experience, Slack directly supports Mitratech's ambitious growth trajectory.</p>
+            <p>Once RCA/RCB is up and running, Mitratech will already have the critical collaboration foundation set with Slack. This ensures a <strong>smooth transition into more advanced integrations</strong>, enabling your teams to <strong>streamline approvals</strong> with greater ease. With robust mobile usage, teams stay aligned and act in real-time, enhancing the overall <strong>quote-to-cash experience</strong> and positioning Mitratech to scale rapidly. By starting with Slack now, you not only accelerate the path to value but also set the stage for a more agile, integrated future.</p>
+        </div>
+
+        <div class="section">
+            <h2>Core Business Assumptions</h2>
+            <div class="input-block">
+                <label for="avg_annual_employee_cost">Average Annual Fully Loaded Employee Cost ($):</label>
+                <input type="number" id="avg_annual_employee_cost" value="90000">
+            </div>
+            <div class="input-block">
+                <label for="work_weeks_per_year">Work Weeks Per Year:</label>
+                <input type="number" id="work_weeks_per_year" value="50">
+            </div>
+            <div class="input-block">
+                <label for="work_hours_per_week">Work Hours Per Week (per employee):</label>
+                <input type="number" id="work_hours_per_week" value="40">
+                <p class="note">These values are used to calculate an average hourly cost for time savings.</p>
+                <span class="sub-section-output">Average Hourly Cost: $<span id="avg_hourly_cost_display">0.00</span></span>
+                <span class="calculation-detail">(Calculated: Avg Annual Cost / (Work Weeks * Work Hours))</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>A. Unlock Value Faster: Accelerating M&A Integration & Deal Velocity</h2>
+            <p class="note">With an aggressive acquisition strategy, Slack bridges the gap by providing vital <strong>cross-acquisition visibility</strong>, fostering <strong>faster opportunity identification</strong>, and creating a <strong>unified customer context</strong>—enabling your teams to act with greater speed and clarity for true <strong>speed to revenue from acquisitions.</strong></p>
+            <div class="input-block">
+                <label for="acquisitions_per_year">Number of Acquisitions Per Year:</label>
+                <input type="number" id="acquisitions_per_year" value="2">
+            </div>
+            <div class="input-block">
+                <label for="avg_employees_per_acquisition">Average Number of Employees Integrated Per Acquisition:</label>
+                <input type="number" id="avg_employees_per_acquisition" value="50">
+            </div>
+            <div class="input-block">
+                <label for="onboarding_ramp_weeks">Onboarding Ramp-Up Duration for Acquired Employees (weeks):</label>
+                <input type="number" id="onboarding_ramp_weeks" value="8">
+            </div>
+            <div class="input-block">
+                <label for="hours_saved_onboarding_per_week_per_employee">Hours Saved per Acquired Employee per Week during Ramp-Up (due to Slack):</label>
+                <input type="number" id="hours_saved_onboarding_per_week_per_employee" value="2">
+                <span class="sub-section-output">Onboarding Efficiency Value: $<span id="onboarding_value_M_A">0</span></span>
+                <span class="calculation-detail" id="onboarding_calc_detail"></span>
+            </div>
+            <div class="input-block">
+                <label for="key_personnel_M_A_integration">Number of Key Personnel in M&A Data/Systems Integration (Sales Ops, Rev Ops, IT):</label>
+                <input type="number" id="key_personnel_M_A_integration" value="10">
+            </div>
+            <div class="input-block">
+                <label for="hours_saved_manual_data_ops_per_week_per_personnel">Hours Saved per Week per Key Personnel (from reduced manual tasks across multiple SFDCs, etc.):</label>
+                <input type="number" id="hours_saved_manual_data_ops_per_week_per_personnel" value="3">
+                <p class="note">Reduced effort for data extraction/reconciliation from your <strong>5 Salesforce instances</strong>.</p>
+                <span class="sub-section-output">Data Operations Efficiency Value: $<span id="data_ops_value_M_A">0</span></span>
+                <span class="calculation-detail" id="data_ops_calc_detail"></span>
+            </div>
+            
+            <hr>
+            <p class="note"><strong>Streamlined Deal Approvals & Sales Collaboration:</strong> Slack centralizes deal workflows, enabling <strong>faster decision-making and synchronized multi-org approvals,</strong> accelerating deal velocity and maintaining momentum during RCA/RCB integration.</p>
+            <div class="input-block">
+                <label for="deals_requiring_approval_per_year">Number of Deals Requiring Formal Approval Per Year:</label>
+                <input type="number" id="deals_requiring_approval_per_year" value="200">
+            </div>
+            <div class="input-block">
+                <label for="time_saved_per_approval_with_slack_hours">Estimated Time Saved per Approval Cycle with Slack (hours):</label>
+                <input type="number" id="time_saved_per_approval_with_slack_hours" value="1.5">
+                <span class="sub-section-output">Streamlined Deal Approvals Value: $<span id="deal_approval_value">0</span></span>
+                <span class="calculation-detail" id="deal_approval_calc_detail"></span>
+            </div>
+
+            <div class="section-total-value">Total Annual Value from M&A & Deal Velocity: $<span id="total_value_M_A_deals">0</span></div>
+        </div>
+
+        <div class="section">
+            <h2>B. Unify GTM Strategy: Boosting Cross-Sell & Upsell Revenue</h2>
+            <p class="note">Slack enables account teams to work in a single, unified platform (integrating Salesforce, Tableau, etc.), surfacing <strong>real-time account insights</strong> so teams can act on opportunities immediately and get the <strong>full picture of the customer journey.</strong></p>
+            <div class="input-block">
+                <label for="current_annual_cross_sell_revenue">Current Annual Cross-Sell Revenue ($):</label>
+                <input type="number" id="current_annual_cross_sell_revenue" value="5000000">
+            </div>
+            <div class="input-block">
+                <label for="estimated_increase_cross_sell_revenue_percent">Estimated % Increase in Cross-Sell Revenue (due to Slack):</label>
+                <input type="number" id="estimated_increase_cross_sell_revenue_percent" value="10">
+                <p class="note">Reflects improved visibility and collaboration leading to more converted opportunities.</p>
+                <span class="section-total-value">Potential Annual Additional Cross-Sell Revenue: $<span id="total_value_cross_sell">0</span></span> 
+                <span class="calculation-detail" id="cross_sell_calc_detail"></span>
+                </div>
+        </div>
+
+        <div class="section">
+            <h2>C. Enhance Employee Experience & Service Excellence</h2>
+            <p class="note">Address "junky collaboration tools," save time, consolidate workflows, and enable service teams to handle escalations more efficiently, improving satisfaction and fostering a "talent destination."</p>
+            <div class="input-block">
+                <label for="total_employees_impacted_by_tool_improvement">Number of Employees Significantly Impacted by Collaboration Tool Improvement:</label>
+                <input type="number" id="total_employees_impacted_by_tool_improvement" value="500">
+            </div>
+            <div class="input-block">
+                <label for="hours_saved_productivity_per_week_per_employee">Hours Saved per Week per Impacted Employee (General Productivity):</label>
+                <input type="number" id="hours_saved_productivity_per_week_per_employee" value="1.5">
+                <span class="sub-section-output">General Productivity Gains Value: $<span id="productivity_value_general">0</span></span>
+                <span class="calculation-detail" id="productivity_calc_detail"></span>
+            </div>
+            
+            <hr>
+            <p class="note"><strong>Enhanced Service Escalation Handling:</strong> Bring the right people together in real-time to resolve customer issues faster.</p>
+            <div class="input-block">
+                <label for="escalations_per_year">Number of Major Customer Escalations Per Year:</label>
+                <input type="number" id="escalations_per_year" value="100">
+            </div>
+            <div class="input-block">
+                <label for="time_saved_per_escalation_with_slack_hours">Estimated Time Saved per Escalation with Slack (hours):</label>
+                <input type="number" id="time_saved_per_escalation_with_slack_hours" value="3">
+                <span class="sub-section-output">Service Escalation Efficiency Value: $<span id="service_escalation_value">0</span></span>
+                <span class="calculation-detail" id="service_escalation_calc_detail"></span>
+            </div>
+
+            <div id="attrition_section" class="input-block" style="margin-top:20px;">
+                 <hr>
+                <label for="consider_attrition_savings">Consider Attrition Savings (Optional):</label>
+                <input type="checkbox" id="consider_attrition_savings" style="width:auto; margin-right: 5px; vertical-align: middle;"> Yes
+                
+                <div id="attrition_inputs" style="display:none; margin-top: 10px; padding:10px; border: 1px dashed #ddd; border-radius: 4px;">
+                    <div class="input-block">
+                        <label for="employee_attrition_rate_percent">Current Annual Employee Attrition Rate (%):</label>
+                        <input type="number" id="employee_attrition_rate_percent" value="15">
+                    </div>
+                    <div class="input-block">
+                        <label for="potential_attrition_reduction_percent">Potential Attrition Rate Reduction due to Improved Tools/Experience (% points):</label>
+                        <input type="number" id="potential_attrition_reduction_percent" value="0.5">
+                    </div>
+                </div>
+                 <span class="sub-section-output" id="attrition_savings_display" style="display:none;">Attrition Reduction Savings Value: $<span id="attrition_savings_value">0</span></span>
+                 <span class="calculation-detail" id="attrition_calc_detail" style="display:none;"></span>
+            </div>
+
+            <div class="section-total-value">Total Annual Value from Employee & Service Excellence: $<span id="total_value_employee_experience">0</span></div>
+        </div>
+
+        <div class="section" style="text-align:center;">
+            <h2 style="color:#001949; border-bottom: none;">Estimated Grand Total Annual Value with Slack:</h2>
+            <div class="grand-total-value">$<span id="grand_total_annual_value">0</span></div>
+        </div>
+
+        <button onclick="calculateValue()">Calculate Value</button>
+
+        <div class="final-notes">
+            <h2>Reinforcing the "Why Now": Rapid Impact & Strategic Partnership</h2>
+            <p><strong>Demonstrable Business Impact in Just 3-4 Months:</strong> The value drivers quantified above can begin to materialize quickly as your teams adopt Slack for critical M&A integration, deal collaboration, and cross-functional communication tasks. Leaders can also benefit from <strong>strengthened visibility</strong> via real-time updates and portfolio-wide metrics accessible within Slack, enabling data-driven decisions to keep deals moving.</p>
+            <p><strong>Commercial Flexibility to Support Your Journey:</strong> Alongside the quantifiable operational and revenue benefits, we are prepared to discuss:
+                <ul>
+                    <li><strong>Competitive Standalone Pricing:</strong> Allowing Mitratech to start immediately while keeping the SELA transition in mind.</li>
+                    <li><strong>Seamless SELA Integration:</strong> Ensuring a smooth transition once RCA/RCB is live.</li>
+                    <li><strong>Flexible Professional Services:</strong> Creative options, including discounts and payment terms that scale with ramping users.</li>
+                    <li><strong>Quarterly Payment Options:</strong> To match growing user adoption and ease cash flow.</li>
+                </ul>
+            </p>
+            <p>By starting with Slack now, Mitratech not only accelerates the path to value but also sets the stage for a more agile, integrated future as RCA/RCB is fully implemented.</p>
+        </div>
+    </div>
+
+    <script>
+        function S(selector) { return document.getElementById(selector); }
+        function V(selector) { const val = parseFloat(S(selector).value); return isNaN(val) ? 0 : val; }
+        function C(selector){ return S(selector).checked; }
+        function formatCurrency(value, decimals = 0) { // Added decimals parameter
+             return value.toLocaleString('en-US', {minimumFractionDigits: decimals, maximumFractionDigits: decimals}); 
+        }
+        function formatNumber(value, decimals = 0) { 
+            return value.toLocaleString(undefined, {minimumFractionDigits: decimals, maximumFractionDigits: decimals}); 
+        }
+
+
+        S('consider_attrition_savings').addEventListener('change', function() {
+            const isChecked = this.checked;
+            S('attrition_inputs').style.display = isChecked ? 'block' : 'none';
+            S('attrition_savings_display').style.display = isChecked ? 'block' : 'none'; 
+            S('attrition_calc_detail').style.display = isChecked ? 'block' : 'none'; 
+            if (!isChecked) { 
+                S('attrition_savings_value').textContent = '0';
+                S('attrition_calc_detail').textContent = '';
+            }
+            calculateValue(); 
+        });
+
+        function calculateValue() {
+            // General Inputs
+            const avgAnnualCost = V('avg_annual_employee_cost');
+            const workWeeks = V('work_weeks_per_year');
+            const hoursPerWeek = V('work_hours_per_week');
+            const avgHourlyCost = (workWeeks > 0 && hoursPerWeek > 0) ? avgAnnualCost / (workWeeks * hoursPerWeek) : 0;
+            S('avg_hourly_cost_display').textContent = formatCurrency(avgHourlyCost, 2);
+
+
+            // A. M&A Integration & Deal Velocity
+            const acqPerYear = V('acquisitions_per_year');
+            const empPerAcq = V('avg_employees_per_acquisition');
+            const onboardWeeks = V('onboarding_ramp_weeks');
+            const hrsSavedOnboardWkEmp = V('hours_saved_onboarding_per_week_per_employee');
+            const totalOnboardingHrsSaved = hrsSavedOnboardWkEmp * onboardWeeks * empPerAcq * acqPerYear;
+            const onboardingValueMA = totalOnboardingHrsSaved * avgHourlyCost;
+            S('onboarding_value_M_A').textContent = formatCurrency(onboardingValueMA);
+            S('onboarding_calc_detail').textContent = `Calculation: (${formatNumber(hrsSavedOnboardWkEmp)} hrs/wk × ${formatNumber(onboardWeeks)} wks × ${formatNumber(empPerAcq)} emps/acq × ${formatNumber(acqPerYear)} acqs/yr) × $${formatCurrency(avgHourlyCost,2)}/hr`;
+
+            const keyPersonnelMA = V('key_personnel_M_A_integration');
+            const hrsSavedDataOpsWkPers = V('hours_saved_manual_data_ops_per_week_per_personnel');
+            const totalDataOpsHrsSaved = hrsSavedDataOpsWkPers * keyPersonnelMA * workWeeks;
+            const dataOpsValueMA = totalDataOpsHrsSaved * avgHourlyCost;
+            S('data_ops_value_M_A').textContent = formatCurrency(dataOpsValueMA);
+            S('data_ops_calc_detail').textContent = `Calculation: (${formatNumber(hrsSavedDataOpsWkPers)} hrs/wk × ${formatNumber(keyPersonnelMA)} personnel × ${formatNumber(workWeeks)} wks/yr) × $${formatCurrency(avgHourlyCost,2)}/hr`;
+
+            const dealsRequiringApproval = V('deals_requiring_approval_per_year');
+            const timeSavedPerApproval = V('time_saved_per_approval_with_slack_hours');
+            const dealApprovalValue = dealsRequiringApproval * timeSavedPerApproval * avgHourlyCost;
+            S('deal_approval_value').textContent = formatCurrency(dealApprovalValue);
+            S('deal_approval_calc_detail').textContent = `Calculation: (${formatNumber(dealsRequiringApproval)} deals/yr × ${formatNumber(timeSavedPerApproval)} hrs saved/deal) × $${formatCurrency(avgHourlyCost,2)}/hr`;
+            
+            const totalValueMADeals = onboardingValueMA + dataOpsValueMA + dealApprovalValue;
+            S('total_value_M_A_deals').textContent = formatCurrency(totalValueMADeals);
+
+            // B. Cross-Sell
+            const currentCrossSellRev = V('current_annual_cross_sell_revenue');
+            const increaseCrossSellRevPercent = V('estimated_increase_cross_sell_revenue_percent') / 100;
+            const additionalCrossSellRevenue = currentCrossSellRev * increaseCrossSellRevPercent;
+            S('total_value_cross_sell').textContent = formatCurrency(additionalCrossSellRevenue);
+            S('cross_sell_calc_detail').textContent = `Calculation: $${formatCurrency(currentCrossSellRev)} current revenue × ${formatNumber(V('estimated_increase_cross_sell_revenue_percent'))}% increase`;
+
+
+            // C. Employee Experience & Service Excellence
+            const totalEmpImpacted = V('total_employees_impacted_by_tool_improvement');
+            const hrsSavedProdWkEmp = V('hours_saved_productivity_per_week_per_employee');
+            const totalProdHrsSaved = hrsSavedProdWkEmp * totalEmpImpacted * workWeeks;
+            const productivityValueGeneral = totalProdHrsSaved * avgHourlyCost;
+            S('productivity_value_general').textContent = formatCurrency(productivityValueGeneral);
+            S('productivity_calc_detail').textContent = `Calculation: (${formatNumber(hrsSavedProdWkEmp)} hrs/wk × ${formatNumber(totalEmpImpacted)} emps × ${formatNumber(workWeeks)} wks/yr) × $${formatCurrency(avgHourlyCost,2)}/hr`;
+
+            const escalationsPerYear = V('escalations_per_year');
+            const timeSavedPerEscalation = V('time_saved_per_escalation_with_slack_hours');
+            const serviceEscalationValue = escalationsPerYear * timeSavedPerEscalation * avgHourlyCost;
+            S('service_escalation_value').textContent = formatCurrency(serviceEscalationValue);
+            S('service_escalation_calc_detail').textContent = `Calculation: (${formatNumber(escalationsPerYear)} escalations/yr × ${formatNumber(timeSavedPerEscalation)} hrs saved/escalation) × $${formatCurrency(avgHourlyCost,2)}/hr`;
+            
+            let attritionSavingsValue = 0;
+            if (C('consider_attrition_savings')) {
+                const potentialAttritionReductionPoints = V('potential_attrition_reduction_percent') / 100; 
+                const numEmployeesRetained = totalEmpImpacted * potentialAttritionReductionPoints; 
+                const costPerReplacement = avgAnnualCost * 1; 
+                attritionSavingsValue = numEmployeesRetained * costPerReplacement;
+                S('attrition_savings_value').textContent = formatCurrency(attritionSavingsValue);
+                S('attrition_calc_detail').textContent = `Calculation: (${formatNumber(totalEmpImpacted)} impacted emps × ${formatNumber(V('potential_attrition_reduction_percent'))}% attrition reduction) × $${formatCurrency(costPerReplacement)} avg cost/replacement`;
+            } else {
+                S('attrition_savings_value').textContent = '0';
+                S('attrition_calc_detail').textContent = '';
+            }
+
+            const totalValueEmployeeExperience = productivityValueGeneral + serviceEscalationValue + attritionSavingsValue;
+            S('total_value_employee_experience').textContent = formatCurrency(totalValueEmployeeExperience);
+
+            // Grand Total
+            const grandTotal = totalValueMADeals + additionalCrossSellRevenue + totalValueEmployeeExperience;
+            S('grand_total_annual_value').textContent = formatCurrency(grandTotal);
+        }
+
+        window.onload = function() {
+            const isAttritionChecked = S('consider_attrition_savings').checked;
+            S('attrition_inputs').style.display = isAttritionChecked ? 'block' : 'none';
+            S('attrition_savings_display').style.display = isAttritionChecked ? 'block' : 'none';
+            S('attrition_calc_detail').style.display = isAttritionChecked ? 'block' : 'none';
+            calculateValue();
+        }
+    </script>
+</body>
+</html>
